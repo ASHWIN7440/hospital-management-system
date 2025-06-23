@@ -1,0 +1,258 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2d3436;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .approval-card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    .approval-header {
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      color: white;
+      padding: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .approval-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .approval-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+    }
+
+    .approval-table th {
+      background: #f8f9fa;
+      color: #2d3436;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .approval-table td {
+      padding: 1rem;
+      border-bottom: 1px solid #e9ecef;
+      color: #2d3436;
+      transition: all 0.3s ease;
+    }
+
+    .approval-table tr:hover td {
+      background: #f8f9fa;
+    }
+
+    .approval-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+
+    .action-btn i {
+      font-size: 1rem;
+    }
+
+    .btn-approve {
+      background: #4ECDC4;
+      color: white;
+    }
+
+    .btn-approve:hover {
+      background: #3dbeb6;
+      transform: translateY(-2px);
+    }
+
+    .btn-reject {
+      background: #FF5370;
+      color: white;
+    }
+
+    .btn-reject:hover {
+      background: #e64a65;
+      transform: translateY(-2px);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #636e72;
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      color: #b2bec3;
+      margin-bottom: 1rem;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      .approval-table {
+        display: block;
+        overflow-x: auto;
+      }
+
+      .approval-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .action-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+  <h1 class="page-title">Appointment Approvals</h1>
+
+  <div class="approval-card">
+    <div class="approval-header">
+      <h2><i class="fas fa-tasks"></i> Pending Approvals</h2>
+      <div class="header-actions">
+        <a href="/admin-view-appointment" class="action-btn btn-approve">
+          <i class="fas fa-calendar-check"></i> View All Appointments
+        </a>
+      </div>
+    </div>
+
+    {% if appointments %}
+    <table class="approval-table">
+      <thead>
+        <tr>
+          <th>Doctor Name</th>
+          <th>Patient Name</th>
+          <th>Description</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in appointments %}
+        <tr>
+          <td>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-user-md text-primary me-2"></i>
+              {{a.doctorName}}
+            </div>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-user text-success me-2"></i>
+              {{a.patientName}}
+            </div>
+          </td>
+          <td>{{a.description}}</td>
+          <td>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-calendar text-info me-2"></i>
+              {{a.appointmentDate}}
+            </div>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <a href="{% url 'approve-appointment' a.id %}" class="action-btn btn-approve">
+                <i class="fas fa-check"></i> Approve
+              </a>
+              <a href="{% url 'reject-appointment' a.id %}" class="action-btn btn-reject">
+                <i class="fas fa-times"></i> Reject
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <i class="fas fa-check-circle"></i>
+      <h3>No Pending Approvals</h3>
+      <p>All appointments have been processed.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock content %}

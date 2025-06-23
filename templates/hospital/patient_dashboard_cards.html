@@ -1,0 +1,197 @@
+{% load static %}
+<style>
+  .dashboard-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  .dashboard-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    padding: 2rem 1.5rem;
+    min-width: 260px;
+    max-width: 340px;
+    flex: 1 1 260px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .dashboard-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 16px 40px 0 rgba(31, 38, 135, 0.25);
+  }
+  .dashboard-icon {
+    font-size: 2.8rem;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    padding: 1rem;
+    margin-right: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    min-height: 64px;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.12);
+  }
+  .dashboard-info h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    color: #fff;
+  }
+  .dashboard-info h4 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #e0e0e0;
+    margin-bottom: 0;
+  }
+  .dashboard-section-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #667eea;
+    margin: 2.5rem 0 1.5rem 0;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .alert-info {
+    background: linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%);
+    color: #333;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.1rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.08);
+  }
+  @media (max-width: 900px) {
+    .dashboard-section {
+      flex-direction: column;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .dashboard-card {
+      width: 100%;
+      max-width: 95vw;
+    }
+  }
+</style>
+
+<!-- Patient Information Section -->
+<div class="dashboard-section">
+  <div class="dashboard-card">
+    <div class="dashboard-icon bg-primary">
+      <i class="fas fa-user-injured"></i>
+    </div>
+    <div class="dashboard-info">
+      <h3>{{patientName}}</h3>
+      <h4>Patient Name</h4>
+    </div>
+  </div>
+  <div class="dashboard-card">
+    <div class="dashboard-icon bg-warning">
+      <i class="fas fa-notes-medical"></i>
+    </div>
+    <div class="dashboard-info">
+      <h3>{{symptoms}}</h3>
+      <h4>Symptoms</h4>
+    </div>
+  </div>
+  <div class="dashboard-card">
+    <div class="dashboard-icon bg-success">
+      <i class="fas fa-mobile-alt"></i>
+    </div>
+    <div class="dashboard-info">
+      <h3>{{patientMobile}}</h3>
+      <h4>Patient Mobile</h4>
+    </div>
+  </div>
+</div>
+
+<div class="dashboard-section">
+  <div class="dashboard-card">
+    <div class="dashboard-icon bg-info">
+      <i class="fas fa-map-marker-alt"></i>
+    </div>
+    <div class="dashboard-info">
+      <h3>{{patientAddress}}</h3>
+      <h4>Patient Address</h4>
+    </div>
+  </div>
+  <div class="dashboard-card">
+    <div class="dashboard-icon bg-danger">
+      <i class="fas fa-heartbeat"></i>
+    </div>
+    <div class="dashboard-info">
+      <h3>{{patientStatus}}</h3>
+      <h4>Patient Status</h4>
+    </div>
+  </div>
+  <div class="dashboard-card">
+    <div class="dashboard-icon bg-secondary">
+      <i class="fas fa-calendar-day"></i>
+    </div>
+    <div class="dashboard-info">
+      <h3>{{admitDate}}</h3>
+      <h4>Admit Date</h4>
+    </div>
+  </div>
+</div>
+
+<!-- Doctor Information Section -->
+{% if hasDoctor %}
+  <div class="dashboard-section-title">Assigned Doctor Information</div>
+  <div class="dashboard-section">
+    <div class="dashboard-card">
+      <div class="dashboard-icon bg-primary">
+        <i class="fas fa-user-md"></i>
+      </div>
+      <div class="dashboard-info">
+        <h3>{{doctorName}}</h3>
+        <h4>Doctor Name</h4>
+      </div>
+    </div>
+    <div class="dashboard-card">
+      <div class="dashboard-icon bg-warning">
+        <i class="fas fa-stethoscope"></i>
+      </div>
+      <div class="dashboard-info">
+        <h3>{{doctorDepartment}}</h3>
+        <h4>Doctor Department</h4>
+      </div>
+    </div>
+    <div class="dashboard-card">
+      <div class="dashboard-icon bg-success">
+        <i class="fas fa-mobile-alt"></i>
+      </div>
+      <div class="dashboard-info">
+        <h3>{{doctorMobile}}</h3>
+        <h4>Doctor Mobile</h4>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard-section">
+    <div class="dashboard-card" style="flex:2;">
+      <div class="dashboard-icon bg-info">
+        <i class="fas fa-map-marker-alt"></i>
+      </div>
+      <div class="dashboard-info">
+        <h3>{{doctorAddress}}</h3>
+        <h4>Doctor Address</h4>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="dashboard-section-title">No Doctor Assigned</div>
+  <div class="alert alert-info text-center">
+    <i class="fas fa-info-circle"></i> You don't have an assigned doctor yet. Please contact the hospital administration to get a doctor assigned to you.
+  </div>
+{% endif %}
+
+<!-- Font Awesome 6 CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />

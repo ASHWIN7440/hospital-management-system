@@ -1,0 +1,213 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<style media="screen">
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .panel {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .panel-heading {
+    background: linear-gradient(45deg, #6C63FF, #FF6584);
+    color: #ffffff;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel-heading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    transform: skewY(-5deg);
+  }
+
+  .panel-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+  }
+
+  .table {
+    width: 100%;
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .table th {
+    background: #f8f9fa;
+    color: #2c3e50;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 2px solid #e9ecef;
+  }
+
+  .table td {
+    padding: 1.2rem 1.5rem;
+    color: #2c3e50;
+    vertical-align: middle;
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+  }
+
+  .table tbody tr {
+    transition: all 0.3s ease;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.01);
+  }
+
+  .department-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(45deg, #6C63FF, #FF6584);
+    color: #ffffff;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .doctor-name {
+    font-weight: 500;
+    color: #2c3e50;
+  }
+
+  .mobile-number {
+    color: #6c757d;
+    font-family: monospace;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem 0.5rem;
+    }
+
+    .panel-heading {
+      padding: 1rem;
+    }
+
+    .panel-title {
+      font-size: 1.2rem;
+    }
+
+    .table th,
+    .table td {
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .department-badge {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
+    }
+
+    .mobile-number {
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 0.5rem 0.2rem;
+    }
+
+    .panel-heading {
+      padding: 0.7rem;
+    }
+
+    .panel-title {
+      font-size: 1rem;
+    }
+
+    .table th,
+    .table td {
+      padding: 0.5rem 0.6rem;
+      font-size: 0.75rem;
+    }
+
+    .department-badge {
+      font-size: 0.7rem;
+      padding: 0.3rem 0.6rem;
+    }
+
+    .doctor-name {
+      font-size: 0.75rem;
+    }
+
+    .mobile-number {
+      font-size: 0.7rem;
+    }
+  }
+</style>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+  <div class="panel">
+    <div class="panel-heading">
+      <h6 class="panel-title">Department & Doctors</h6>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Department</th>
+          <th>Doctor Name</th>
+          <th>Mobile</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in doctors %}
+        <tr>
+          <td><span class="department-badge">{{d.department}}</span></td>
+          <td><span class="doctor-name">{{d.get_name}}</span></td>
+          <td><span class="mobile-number">{{d.mobile}}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

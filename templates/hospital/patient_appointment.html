@@ -1,0 +1,123 @@
+{% extends 'hospital/patient_base.html' %}
+{% load static %}
+{% block content %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .page-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: #2d3436;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    .card-block {
+      padding: 2rem 1.5rem;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      height: 100%;
+    }
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #2d3436;
+    }
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #6C63FF;
+    }
+    .card-description {
+      font-size: 1rem;
+      color: #636e72;
+      margin-bottom: 1.5rem;
+    }
+    .bg-c-blue {
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      color: #fff;
+    }
+    .bg-c-green {
+      background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      .card-block {
+        padding: 1.2rem 0.7rem;
+      }
+      .card-title {
+        font-size: 1.1rem;
+      }
+      .card-icon {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+  <h1 class="page-title">Appointment Management</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-xl-6 mb-4">
+      <div class="card bg-c-blue">
+        <a href="/patient-view-appointment" class="card-link">
+          <div class="card-block">
+            <i class="fas fa-calendar-check card-icon"></i>
+            <div class="card-title">View Appointments</div>
+            <div class="card-description">See all your booked appointments and their status</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-6 mb-4">
+      <div class="card bg-c-green">
+        <a href="/patient-book-appointment" class="card-link">
+          <div class="card-block">
+            <i class="fas fa-book-medical card-icon"></i>
+            <div class="card-title">Book Appointment</div>
+            <div class="card-description">Schedule a new appointment with a doctor</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br>
+{% endblock content %}

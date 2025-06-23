@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    @page {
+      size: A4;
+      margin: 1cm;
+
+      @frame footer {
+        -pdf-frame-content: footerContent;
+        bottom: 0cm;
+        margin-left: 9cm;
+        margin-right: 9cm;
+        height: 1cm;
+      }
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      margin: 0;
+      color: #2d3436;
+    }
+
+    .invoice-box {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2.5rem;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .invoice-box table {
+      width: 100%;
+      line-height: 1.6;
+      text-align: left;
+      border-collapse: collapse;
+    }
+
+    .invoice-box table td {
+      padding: 1rem;
+      vertical-align: top;
+    }
+
+    .invoice-box table tr.top table td {
+      padding-bottom: 2rem;
+    }
+
+    .invoice-box table tr.top table td.title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2d3436;
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .invoice-box table tr.information table td {
+      padding-bottom: 2rem;
+    }
+
+    .invoice-box table tr.heading td {
+      background: #f8f9fa;
+      border-bottom: 2px solid #e9ecef;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    .invoice-box table tr.details td {
+      padding-bottom: 1.5rem;
+    }
+
+    .invoice-box table tr.item td {
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .invoice-box table tr.item.last td {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2d3436;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .info-label {
+      font-weight: 500;
+      color: #636e72;
+      margin-right: 0.5rem;
+    }
+
+    .bill-info {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .bill-info-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .bill-info-item i {
+      color: #6C63FF;
+      margin-right: 0.5rem;
+      width: 20px;
+    }
+
+    .charges-section {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    .charge-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .charge-item:last-child {
+      border-bottom: none;
+    }
+
+    .total-amount {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2d3436;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px solid #2d3436;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e9ecef;
+      color: #636e72;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .invoice-box {
+        padding: 1.5rem;
+        margin: 1rem auto;
+      }
+
+      .invoice-box table tr.top table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+      }
+
+      .invoice-box table tr.information table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+      }
+    }
+
+    /** RTL **/
+    .rtl {
+      direction: rtl;
+      font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+
+    .rtl table {
+      text-align: right;
+    }
+
+    .rtl table tr td:nth-child(2) {
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+
+  <br><br><br>
+  <div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+      <tr class="top">
+        <td colspan="2">
+          <table>
+            <tr>
+              <td class="title">
+                <h1>Hospital Management</h1>
+              </td>
+              <td>
+                <div class="bill-info">
+                  <div class="bill-info-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Admit Date: {{admitDate}}</span>
+                  </div>
+                  <div class="bill-info-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Release Date: {{releaseDate}}</span>
+                  </div>
+                  <div class="bill-info-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Days Spent: {{daySpent}}</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr class="information">
+        <td colspan="2">
+          <table>
+            <tr>
+              <td>
+                <div class="section-title">Patient Information</div>
+                <div class="bill-info-item">
+                  <i class="fas fa-user"></i>
+                  <span>Name: {{patientName}}</span>
+                </div>
+                <div class="bill-info-item">
+                  <i class="fas fa-phone"></i>
+                  <span>Mobile: {{mobile}}</span>
+                </div>
+                <div class="bill-info-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Address: {{address}}</span>
+                </div>
+              </td>
+              <td>
+                <div class="section-title">Doctor Information</div>
+                <div class="bill-info-item">
+                  <i class="fas fa-user-md"></i>
+                  <span>Name: {{assignedDoctorName}}</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <tr class="information">
+        <td colspan="2">
+          <div class="section-title">Disease and Symptoms</div>
+          <div style="padding-left: 1rem;">{{symptoms}}</div>
+        </td>
+      </tr>
+
+      <tr class="information">
+        <td colspan="2">
+          <div class="section-title">Bill Details</div>
+          <div class="charges-section">
+            <div class="charge-item">
+              <span>Room Charge ({{daySpent}} Days)</span>
+              <span>Rs. {{roomCharge}}</span>
+            </div>
+            <div class="charge-item">
+              <span>Doctor Fee</span>
+              <span>Rs. {{doctorFee}}</span>
+            </div>
+            <div class="charge-item">
+              <span>Medicine Cost</span>
+              <span>Rs. {{medicineCost}}</span>
+            </div>
+            <div class="charge-item">
+              <span>Other Charges</span>
+              <span>Rs. {{OtherCharge}}</span>
+            </div>
+            <div class="total-amount">
+              <span>Total Amount:</span>
+              <span>Rs. {{total}}</span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div class="footer">
+      <p>Thank you for choosing our hospital services</p>
+      <p>This is a computer-generated bill and does not require a signature</p>
+    </div>
+  </div>
+</body>
+<!--
+developed By : sumit kumar
+facebook : fb.com/sumit.luv
+youtube : youtube.com/lazycoders
+-->
+
+</html>

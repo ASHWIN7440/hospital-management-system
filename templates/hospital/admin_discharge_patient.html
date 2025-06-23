@@ -1,0 +1,253 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style media="screen">
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .panel {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .panel-heading {
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      padding: 1.5rem;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-title {
+      color: #ffffff;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .table {
+      margin: 0;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .table thead th {
+      background: #f8f9fa;
+      color: #495057;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      padding: 1.2rem;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .table tbody td {
+      padding: 1.2rem;
+      vertical-align: middle;
+      border-bottom: 1px solid #e9ecef;
+      color: #495057;
+    }
+
+    .table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f8f9fa;
+      transform: scale(1.01);
+    }
+
+    .btn {
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: white;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, #FF6584, #FF5370);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      opacity: 0.9;
+    }
+
+    .btn i {
+      font-size: 1.1rem;
+    }
+
+    .patient-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .patient-name {
+      font-weight: 500;
+      color: #2d3436;
+      font-size: 1rem;
+    }
+
+    .patient-details {
+      font-size: 0.9rem;
+      color: #636e72;
+      margin-top: 0.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 1rem auto;
+        padding: 0 0.5rem;
+      }
+
+      .panel-heading {
+        padding: 1rem;
+      }
+
+      .panel-title {
+        font-size: 1.2rem;
+      }
+
+      .table thead th,
+      .table tbody td {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .patient-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.3rem;
+      }
+
+      .patient-name {
+        font-size: 0.95rem;
+      }
+
+      .patient-details {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        margin: 0.5rem auto;
+        padding: 0 0.3rem;
+      }
+
+      .panel-heading {
+        padding: 0.8rem;
+      }
+
+      .panel-title {
+        font-size: 1.1rem;
+      }
+
+      .table thead th,
+      .table tbody td {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+      }
+
+      .btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+      }
+
+      .btn i {
+        font-size: 0.9rem;
+      }
+
+      .patient-name {
+        font-size: 0.9rem;
+      }
+
+      .patient-details {
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+  <div class="panel">
+    <div class="panel-heading">
+      <h6 class="panel-title">Discharge Patients</h6>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Patient Information</th>
+          <th>Symptoms</th>
+          <th>Mobile</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in patients %}
+        <tr>
+          <td>
+            <div class="patient-info">
+              <div>
+                <div class="patient-name">{{p.get_name}}</div>
+                <div class="patient-details">ID: {{p.id}}</div>
+              </div>
+            </div>
+          </td>
+          <td>{{p.symptoms}}</td>
+          <td>{{p.mobile}}</td>
+          <td>
+            <a class="btn btn-primary" href="{% url 'discharge-patient' p.id %}">
+              <i class="fas fa-sign-out-alt"></i> Discharge
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+<br><br>
+{% endblock content %}

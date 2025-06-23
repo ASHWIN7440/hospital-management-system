@@ -1,0 +1,233 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<style media="screen">
+  body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+    }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+
+  .card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    border: none;
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    transform: skewY(-5deg);
+    z-index: 1;
+  }
+
+  .card-block {
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .card a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card h6 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .card i {
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover i {
+    transform: scale(1.1);
+  }
+
+  .bg-c-blue {
+    background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+  }
+
+  .bg-c-green {
+    background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+  }
+
+  .bg-c-yellow {
+    background: linear-gradient(45deg, #FFB64D, #FF9F43);
+  }
+
+  .bg-c-pink {
+    background: linear-gradient(45deg, #FF6584, #FF5370);
+  }
+
+  .card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-icon {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+  }
+
+  .card-text {
+    text-align: right;
+  }
+
+  .card-text h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+  }
+
+  .card-text p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem 0.5rem;
+    }
+
+    .row {
+      gap: 1rem;
+    }
+
+    .card-block {
+      padding: 1.5rem;
+    }
+
+    .card h6 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card i {
+      font-size: 2rem;
+    }
+
+    .card-text h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-xl-3">
+      <div class="card bg-c-blue">
+        <div class="card-block">
+          <a href="/admin-view-patient">
+            <h6>Patient Record</h6>
+            <div class="card-content">
+              <div class="card-icon">
+                <i class="fas fa-user-injured"></i>
+              </div>
+              <div class="card-text">
+                <h2>View</h2>
+                <p>All Records</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+      <div class="card bg-c-green">
+        <div class="card-block">
+          <a href="/admin-add-patient">
+            <h6>Admit Patient</h6>
+            <div class="card-content">
+              <div class="card-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <div class="card-text">
+                <h2>Add</h2>
+                <p>New Patient</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+      <div class="card bg-c-yellow">
+        <div class="card-block">
+          <a href="/admin-approve-patient">
+            <h6>Approve Patient</h6>
+            <div class="card-content">
+              <div class="card-icon">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              <div class="card-text">
+                <h2>Verify</h2>
+                <p>Applications</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+      <div class="card bg-c-pink">
+        <div class="card-block">
+          <a href="/admin-discharge-patient">
+            <h6>Discharge Patient</h6>
+            <div class="card-content">
+              <div class="card-icon">
+                <i class="fas fa-eject"></i>
+              </div>
+              <div class="card-text">
+                <h2>Release</h2>
+                <p>From Hospital</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br>
+{% endblock content %}

@@ -1,0 +1,123 @@
+{% extends 'hospital/doctor_base.html' %}
+{% block content %}
+{% load static %}
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+    }
+    .page-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2d3436;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #FF6584, #4ECDC4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .panel {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(255, 101, 132, 0.08);
+      margin-bottom: 2rem;
+      overflow: hidden;
+      border: none;
+    }
+    .panel-heading {
+      background: linear-gradient(45deg, #FF6584, #4ECDC4);
+      color: #fff;
+      padding: 1.2rem 2rem;
+      border-radius: 18px 18px 0 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .panel-title {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .table {
+      margin-bottom: 0;
+      background: #fff;
+      border-radius: 0 0 18px 18px;
+      overflow: hidden;
+    }
+    .table thead th {
+      background: #f8f9fa;
+      color: #2d3436;
+      font-weight: 600;
+      border-bottom: 2px solid #e9ecef;
+      padding: 1rem;
+      font-family: 'Poppins', sans-serif;
+    }
+    .table tbody td {
+      padding: 1rem;
+      vertical-align: middle;
+      color: #2d3436;
+      border-bottom: 1px solid #e9ecef;
+      font-family: 'Poppins', sans-serif;
+    }
+    .table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+    @media (max-width: 768px) {
+      .panel-heading {
+        font-size: 1rem;
+        padding: 1rem 1.2rem;
+      }
+      .table thead th, .table tbody td {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+  <div class="page-title">
+    <i class="fas fa-user-check"></i> Your Discharged Patient List
+  </div>
+  <div class="panel">
+    <div class="panel-heading">
+      <i class="fas fa-procedures"></i>
+      <span class="panel-title">Discharged Patients</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="table table-hover" id="dev-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Admit Date</th>
+            <th>Release Date</th>
+            <th>Symptoms</th>
+            <th>Mobile</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for p in dischargedpatients %}
+        <tr>
+          <td>{{p.patientName}}</td>
+          <td>{{p.admitDate}}</td>
+          <td>{{p.releaseDate}}</td>
+          <td>{{p.symptoms}}</td>
+          <td>{{p.mobile}}</td>
+          <td>{{p.address}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<br><br><br><br><br><br>
+{% endblock content %}

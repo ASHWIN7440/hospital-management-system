@@ -1,0 +1,162 @@
+{% extends 'hospital/admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block content %}
+
+<style media="screen">
+  /* General body styling */
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa; /* Light background */
+    
+  }
+
+  /* Container styling */
+  .container.register-form {
+    max-width: 800px; /* Adjust width */
+    margin: 20px auto; /* Center and add top margin */
+    padding: 0 15px; /* Add some horizontal padding */
+  }
+
+  .form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .note {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .note p {
+    font-size: 1.5rem;
+    color: #3f51b5; /* Match header blue */
+    font-weight: 600;
+  }
+
+  .form-content .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px; /* Counteract column padding */
+  }
+
+  .form-content .col-md-6 {
+    padding: 0 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .form-control {
+    width: 100%;
+    
+    border: 1px solid #ced4da;
+    border-radius: 5px; /* Slightly rounded corners */
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: #4facfe; /* Blue from gradient */
+    box-shadow: 0 0 0 0.2rem rgba(79, 172, 254, 0.25);
+  }
+
+  .btnSubmit {
+    border: none;
+    border-radius: 25px; /* Pill shape */
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    background: linear-gradient(45deg, #4facfe, #00f2fe); /* Gradient button */
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: block; /* Make button full width */
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+
+  .btnSubmit:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Remove default menu style if any */
+  .menu {
+    /* No specific style needed here if handled by admin_base */
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 767.98px) {
+    .form-content .col-md-6 {
+      flex: 0 0 100%;
+      max-width: 100%;
+      padding: 0 10px;
+    }
+  }
+</style>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="container register-form">
+    <div class="form">
+      <div class="note">
+        <p>Add New Doctor To Hospital</p>
+      </div>
+      <div class="form-content">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="{{ userForm.first_name.id_for_label }}">First Name</label>
+              {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+            </div>
+            <div class="form-group">
+              <label for="{{ userForm.username.id_for_label }}">Username</label>
+              {% render_field userForm.username class="form-control" placeholder="Username" %}
+            </div>
+            <div class="form-group">
+              <label for="{{ doctorForm.department.id_for_label }}">Department</label>
+              {% render_field doctorForm.department class="form-control" placeholder="Department" %}
+            </div>
+            <div class="form-group">
+              <label for="{{ doctorForm.address.id_for_label }}">Address</label>
+              {% render_field doctorForm.address class="form-control" placeholder="Address" %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="{{ userForm.last_name.id_for_label }}">Last Name</label>
+              {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+            </div>
+            <div class="form-group">
+              <label for="{{ userForm.password.id_for_label }}">Password</label>
+              {% render_field userForm.password class="form-control" placeholder="Password" %}
+            </div>
+            <div class="form-group">
+              <label for="{{ doctorForm.mobile.id_for_label }}">Mobile</label>
+              {% render_field doctorForm.mobile class="form-control" placeholder="Mobile" %}
+            </div>
+            <div class="form-group">
+              <label for="{{ doctorForm.profile_pic.id_for_label }}">Profile Picture</label>
+              {% render_field doctorForm.profile_pic required="required" class="form-control" placeholder="Profile Picture" %}
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btnSubmit">Register</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock content %}

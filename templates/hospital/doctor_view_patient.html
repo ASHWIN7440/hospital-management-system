@@ -1,0 +1,172 @@
+{% extends 'hospital/doctor_base.html' %}
+{% block content %}
+{% load static %}
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+    }
+    .page-title {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2d3436;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .search-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 2rem;
+    }
+    .search-bar input[type="search"] {
+      border-radius: 25px 0 0 25px;
+      border: 1px solid #6C63FF;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      outline: none;
+      width: 220px;
+      transition: box-shadow 0.2s;
+    }
+    .search-bar button {
+      border-radius: 0 25px 25px 0;
+      border: none;
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      color: #fff;
+      font-weight: 600;
+     
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .search-bar button:hover {
+      background: linear-gradient(45deg, #4ECDC4, #6C63FF);
+    }
+    .panel {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(52, 99, 255, 0.08);
+      margin-bottom: 2rem;
+      overflow: hidden;
+      border: none;
+    }
+    .panel-heading {
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      color: #fff;
+      padding: 1.2rem 2rem;
+      border-radius: 18px 18px 0 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .panel-title {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .table {
+      margin-bottom: 0;
+      background: #fff;
+      border-radius: 0 0 18px 18px;
+      overflow: hidden;
+    }
+    .table thead th {
+      background: #f8f9fa;
+      color: #2d3436;
+      font-weight: 600;
+      border-bottom: 2px solid #e9ecef;
+      padding: 1rem;
+      font-family: 'Poppins', sans-serif;
+    }
+    .table tbody td {
+      padding: 1rem;
+      vertical-align: middle;
+      color: #2d3436;
+      border-bottom: 1px solid #e9ecef;
+      font-family: 'Poppins', sans-serif;
+    }
+    .table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+    .profile-pic {
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(76, 99, 255, 0.08);
+      border: 2px solid #e9ecef;
+    }
+    @media (max-width: 768px) {
+      .panel-heading {
+        font-size: 1rem;
+        padding: 1rem 1.2rem;
+      }
+      .table thead th, .table tbody td {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+      }
+      .search-bar input[type="search"] {
+        width: 120px;
+        font-size: 0.95rem;
+      }
+      .search-bar button {
+        font-size: 0.95rem;
+       
+      }
+    }
+  </style>
+</head>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+  <div class="page-title">
+    <i class="fas fa-user-injured"></i> Your Total Patient List
+  </div>
+  <form action="/search" method="get" class="search-bar">
+    <input class="form-control" type="search" placeholder="Search" name="query" id="query" aria-label="Search">
+    <button type="submit"><i class="fas fa-search"></i> Search</button>
+  </form>
+  {% if patients %}
+  <div class="panel">
+    <div class="panel-heading">
+      <i class="fas fa-users"></i>
+      <span class="panel-title">Patient List</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="table table-hover" id="dev-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Profile Picture</th>
+            <th>Symptoms</th>
+            <th>Mobile</th>
+            <th>Address</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for p in patients %}
+        <tr>
+          <td>{{p.get_name}}</td>
+          <td><img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40" width="40" class="profile-pic" /></td>
+          <td>{{p.symptoms}}</td>
+          <td>{{p.mobile}}</td>
+          <td>{{p.address}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <br><br>
+  <h4 style="text-align: center;color: red;">No Patient Found !!!</h4>
+  {% endif %}
+</div>
+<br><br><br><br><br><br>
+{% endblock content %}

@@ -1,0 +1,191 @@
+{% extends 'hospital/homebase.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  .about-section {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    padding: 4rem 2rem;
+  }
+
+  .about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    animation: fadeInDown 0.8s ease-out;
+  }
+
+  .about-header h1 {
+    color: #2e7d32;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .about-header p {
+    color: #558b2f;
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .about-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+  }
+
+  .about-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .about-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .about-card h2 {
+    color: #2e7d32;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .about-card p {
+    color: #558b2f;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .mission-vision {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    margin-top: 2rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .mission-vision h2 {
+    color: #2e7d32;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .mission-vision-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .mission-box, .vision-box {
+    padding: 2rem;
+    border-radius: 15px;
+    background: #f1f8e9;
+  }
+
+  .mission-box h3, .vision-box h3 {
+    color: #2e7d32;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mission-box p, .vision-box p {
+    color: #558b2f;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-section {
+      padding: 2rem 1rem;
+    }
+
+    .about-header h1 {
+      font-size: 2.5rem;
+    }
+
+    .mission-vision {
+      padding: 2rem 1rem;
+    }
+  }
+</style>
+
+<div class="about-section">
+  <div class="about-container">
+    <div class="about-header">
+      <h1>About Us</h1>
+      <p>Providing Quality Healthcare Services with Compassion and Excellence</p>
+    </div>
+
+    <div class="about-content">
+      <div class="about-card">
+        <h2><i class="fas fa-hospital"></i> Our Hospital</h2>
+        <p>We are a leading healthcare institution committed to providing exceptional medical services. Our state-of-the-art facilities and dedicated staff ensure the highest quality of care for all our patients.</p>
+      </div>
+
+      <div class="about-card">
+        <h2><i class="fas fa-user-md"></i> Our Doctors</h2>
+        <p>Our team consists of highly qualified and experienced medical professionals who are dedicated to delivering personalized care and treatment to each patient.</p>
+      </div>
+
+      <div class="about-card">
+        <h2><i class="fas fa-heartbeat"></i> Our Services</h2>
+        <p>We offer a comprehensive range of medical services, from routine check-ups to specialized treatments, ensuring that all your healthcare needs are met under one roof.</p>
+      </div>
+    </div>
+
+    <div class="mission-vision">
+      <h2>Our Mission & Vision</h2>
+      <div class="mission-vision-content">
+        <div class="mission-box">
+          <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+          <p>To provide accessible, high-quality healthcare services that improve the health and well-being of our community through innovation, compassion, and excellence in patient care.</p>
+        </div>
+        <div class="vision-box">
+          <h3><i class="fas fa-eye"></i> Our Vision</h3>
+          <p>To be the leading healthcare provider, recognized for our commitment to patient-centered care, medical innovation, and community health improvement.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

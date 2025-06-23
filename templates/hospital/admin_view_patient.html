@@ -1,0 +1,246 @@
+{% extends 'hospital/admin_base.html' %}
+{% block content %}
+{%load static%}
+
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<style media="screen">
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .panel {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: none;
+    transition: all 0.3s ease;
+  }
+
+  .panel:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .panel-heading {
+    background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+    padding: 1.5rem;
+    border: none;
+  }
+
+  .panel-title {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .table {
+    margin: 0;
+    width: 100%;
+  }
+
+  .table thead th {
+    background: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    border-bottom: 2px solid #e9ecef;
+  }
+
+  .table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
+  }
+
+  .table tbody tr {
+    transition: all 0.3s ease;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+  }
+
+  .table td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    margin: 0.2rem;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+    color: white;
+  }
+
+  .btn-danger {
+    background: linear-gradient(45deg, #FF6584, #FF5370);
+    color: white;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
+  }
+
+  .btn i {
+    margin-right: 5px;
+    font-size: 0.9em;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      margin: 1rem auto;
+      padding: 0 0.5rem;
+    }
+
+    .panel-heading {
+      padding: 1rem;
+    }
+
+    .panel-title {
+      font-size: 1.2rem;
+    }
+
+    .table thead th,
+    .table tbody td {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .table td img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      margin: 0.5rem auto;
+      padding: 0 0.3rem;
+    }
+
+    .panel-heading {
+      padding: 0.8rem;
+    }
+
+    .panel-title {
+      font-size: 1.1rem;
+    }
+
+    .table thead th,
+    .table tbody td {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    .table td img {
+      width: 32px;
+      height: 32px;
+    }
+
+    .btn {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+    }
+
+    .btn i {
+      font-size: 0.8em;
+    }
+
+    .action-buttons {
+      gap: 0.3rem;
+    }
+  }
+</style>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+  <div class="panel">
+    <div class="panel-heading">
+      <h6 class="panel-title">Patient Records</h6>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Profile Picture</th>
+          <th>Symptoms</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in patients %}
+        <tr>
+          <td>{{p.get_name}}</td>
+          <td><img src="{% static p.profile_pic.url %}" alt="Profile Pic" /></td>
+          <td>{{p.symptoms}}</td>
+          <td>{{p.mobile}}</td>
+          <td>{{p.address}}</td>
+          <td>
+            <div class="action-buttons">
+              <a class="btn btn-primary" href="{% url 'update-patient' p.id %}">
+                <i class="fas fa-edit"></i> Edit
+              </a>
+              <a class="btn btn-danger" href="{% url 'delete-patient-from-hospital' p.id %}">
+                <i class="fas fa-trash"></i> Delete
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

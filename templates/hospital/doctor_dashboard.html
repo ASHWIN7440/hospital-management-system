@@ -1,0 +1,227 @@
+{% extends 'hospital/doctor_base.html' %}
+{% load static %}
+{% block content %}
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+    }
+    .dashboard-container {
+      padding: 2rem;
+    }
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+    }
+    .stat-info h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 0;
+      color: #2c3e50;
+    }
+    .stat-info p {
+      margin: 0;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+    .panel {
+      background: white;
+      border: none;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .panel:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    .panel-heading {
+      background: linear-gradient(45deg, #3498db, #2ecc71) !important;
+      color: white !important;
+      border-radius: 15px 15px 0 0 !important;
+      padding: 1.2rem !important;
+      border: none !important;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .panel-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    .table {
+      margin-bottom: 0;
+    }
+    .table thead th {
+      background: #f8f9fa;
+      color: #2c3e50;
+      font-weight: 600;
+      border-bottom: 2px solid #e9ecef;
+      padding: 1rem;
+      font-family: 'Poppins', sans-serif;
+    }
+    .table tbody td {
+      padding: 1rem;
+      vertical-align: middle;
+      color: #2c3e50;
+      border-bottom: 1px solid #e9ecef;
+      font-family: 'Poppins', sans-serif;
+    }
+    .table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+    @media (max-width: 768px) {
+      .dashboard-container {
+        padding: 1rem;
+      }
+      .stats-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .stat-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1rem;
+      }
+      .stat-info h3 {
+        font-size: 1.2rem;
+      }
+      .stat-info p {
+        font-size: 0.85rem;
+      }
+      .panel-heading {
+        font-size: 1rem;
+        padding: 0.8rem !important;
+      }
+      .table thead th, .table tbody td {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .dashboard-container {
+        padding: 0.5rem;
+      }
+      .stat-card {
+        padding: 0.7rem;
+      }
+      .panel {
+        padding: 0.5rem;
+      }
+      .panel-title {
+        font-size: 1rem;
+      }
+      .stat-info h3 {
+        font-size: 1rem;
+      }
+      .stat-info p {
+        font-size: 0.7rem;
+      }
+      .table thead th, .table tbody td {
+        padding: 0.3rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="dashboard-container">
+  <!-- Statistics Cards -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(45deg, #3498db, #2ecc71);">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{appointmentcount}}</h3>
+        <p>Appointments For You</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(45deg, #2ecc71, #27ae60);">
+        <i class="fas fa-user-injured"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{patientcount}}</h3>
+        <p>Patient Under You</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background: linear-gradient(45deg, #f39c12, #e67e22);">
+        <i class="fas fa-user-check"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{patientdischarged}}</h3>
+        <p>Your Patient Discharged</p>
+      </div>
+    </div>
+  </div>
+  <!-- Main Content -->
+  <div class="panel">
+    <div class="panel-heading">
+      <i class="fas fa-user-injured"></i>
+      <h6 class="panel-title">Recent Patients</h6>
+    </div>
+    <div style="overflow-x:auto;">
+    <table class="table table-hover" id="dev-table">
+      <thead>
+        <tr>
+          <th>Patient Name</th>
+          <th>Picture</th>
+          <th>Symptoms</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Admit Date</th>
+        </tr>
+      </thead>
+      {% for p in patients %}
+      <tr>
+        <td>{{p.get_name}}</td>
+        <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+        <td>{{p.symptoms}}</td>
+        <td>{{p.mobile}}</td>
+        <td>{{p.address}}</td>
+        <td>{{p.admitDate}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+  </div>
+</div>
+<br><br>
+{% endblock content %}

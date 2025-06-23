@@ -1,0 +1,298 @@
+{% extends 'hospital/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      margin: 0;
+      color: #2d3436;
+    }
+
+    .invoice-box {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2.5rem;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .invoice-box table {
+      width: 100%;
+      line-height: 1.6;
+      text-align: left;
+      border-collapse: collapse;
+    }
+
+    .invoice-box table td {
+      padding: 1rem;
+      vertical-align: top;
+    }
+
+    .invoice-box table tr.top table td {
+      padding-bottom: 2rem;
+    }
+
+    .invoice-box table tr.top table td.title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #2d3436;
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .invoice-box table tr.information table td {
+      padding-bottom: 2rem;
+    }
+
+    .invoice-box table tr.heading td {
+      background: #f8f9fa;
+      border-bottom: 2px solid #e9ecef;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+
+    .invoice-box table tr.details td {
+      padding-bottom: 1.5rem;
+    }
+
+    .invoice-box table tr.item td {
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .invoice-box table tr.item.last td {
+      border-bottom: none;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2d3436;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .info-label {
+      font-weight: 500;
+      color: #636e72;
+      margin-right: 0.5rem;
+    }
+
+    .bill-info {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .bill-info-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .bill-info-item i {
+      color: #6C63FF;
+      margin-right: 0.5rem;
+      width: 20px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #2d3436;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #6C63FF;
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+    }
+
+    .form-input::placeholder {
+      color: #b2bec3;
+    }
+
+    .submit-btn {
+      background: linear-gradient(45deg, #6C63FF, #4ECDC4);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+    }
+
+    .submit-btn i {
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .invoice-box {
+        padding: 1.5rem;
+        margin: 1rem auto;
+      }
+
+      .invoice-box table tr.top table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+      }
+
+      .invoice-box table tr.information table td {
+        width: 100%;
+        display: block;
+        text-align: center;
+      }
+
+      .submit-btn {
+        width: 106%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="invoice-box">
+  <table cellpadding="0" cellspacing="0">
+    <tr class="top">
+      <td colspan="2">
+        <table>
+          <tr>
+            <td class="title">
+              <h1>Hospital Management</h1>
+            </td>
+            <td>
+              <div class="bill-info">
+                <div class="bill-info-item">
+                  <i class="fas fa-calendar-alt"></i>
+                  <span>Admit Date: {{admitDate}}</span>
+                </div>
+                <div class="bill-info-item">
+                  <i class="fas fa-calendar-check"></i>
+                  <span>Release Date: {{todayDate}}</span>
+                </div>
+                <div class="bill-info-item">
+                  <i class="fas fa-clock"></i>
+                  <span>Days Spent: {{day}}</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="information">
+      <td colspan="2">
+        <table>
+          <tr>
+            <td>
+              <div class="section-title">Patient Information</div>
+              <div class="bill-info-item">
+                <i class="fas fa-user"></i>
+                <span>Name: {{name}}</span>
+              </div>
+              <div class="bill-info-item">
+                <i class="fas fa-phone"></i>
+                <span>Mobile: {{mobile}}</span>
+              </div>
+              <div class="bill-info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Address: {{address}}</span>
+              </div>
+            </td>
+            <td>
+              <div class="section-title">Doctor Information</div>
+              <div class="bill-info-item">
+                <i class="fas fa-user-md"></i>
+                <span>Name: {{assignedDoctorName}}</span>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="heading">
+      <td colspan="2">
+        <div class="section-title">Disease and Symptoms</div>
+        <div style="padding-left: 1rem;">{{symptoms}}</div>
+      </td>
+    </tr>
+
+    <form method="post">
+      {% csrf_token %}
+      <tr class="heading">
+        <td colspan="2">
+          <div class="section-title">Bill Details</div>
+        </td>
+      </tr>
+
+      <tr class="item">
+        <td>Room Charge (Per Day)</td>
+        <td>
+          <input type="number" name="roomCharge" class="form-input" placeholder="Enter amount in Rupees" required>
+        </td>
+      </tr>
+
+      <tr class="item">
+        <td>Doctor Fee</td>
+        <td>
+          <input type="number" name="doctorFee" class="form-input" placeholder="Enter amount in Rupees" required>
+        </td>
+      </tr>
+
+      <tr class="item">
+        <td>Medicine Cost</td>
+        <td>
+          <input type="number" name="medicineCost" class="form-input" placeholder="Enter amount in Rupees" required>
+        </td>
+      </tr>
+
+      <tr class="item last">
+        <td>Other Charges</td>
+        <td>
+          <input type="number" name="OtherCharge" class="form-input" placeholder="Enter amount in Rupees" required>
+        </td>
+      </tr>
+
+      <tr class="total">
+        <td></td>
+        <td>
+          <button type="submit" name="submit" class="submit-btn">
+            <i class="fas fa-file-invoice"></i>
+            Generate Bill
+          </button>
+        </td>
+      </tr>
+    </form>
+  </table>
+</div>
+
+{% endblock content %}
