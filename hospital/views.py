@@ -10,6 +10,13 @@ from django.conf import settings
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
 
 # Create your views here.
 def home_view(request):
@@ -591,6 +598,37 @@ def reject_appointment_view(request,pk):
     appointment=models.Appointment.objects.get(id=pk)
     appointment.delete()
     return redirect('admin-approve-appointment')
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def view_appointment_view(request,pk):
+    appointment=models.Appointment.objects.get(id=pk)
+    return render(request,'hospital/admin_view_single_appointment.html',{'appointment':appointment})
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def edit_appointment_view(request,pk):
+    appointment=models.Appointment.objects.get(id=pk)
+    appointmentForm=forms.AppointmentForm(instance=appointment)
+    mydict={'appointmentForm':appointmentForm,'appointment':appointment}
+    if request.method=='POST':
+        appointmentForm=forms.AppointmentForm(request.POST,instance=appointment)
+        if appointmentForm.is_valid():
+            appointment=appointmentForm.save(commit=False)
+            appointment.doctorId=request.POST.get('doctorId')
+            appointment.patientId=request.POST.get('patientId')
+            appointment.doctorName=models.User.objects.get(id=request.POST.get('doctorId')).first_name
+            appointment.patientName=models.User.objects.get(id=request.POST.get('patientId')).first_name
+            appointment.save()
+            return redirect('admin-view-appointment')
+    return render(request,'hospital/admin_edit_appointment.html',context=mydict)
+
+@login_required(login_url='adminlogin')
+@user_passes_test(is_admin)
+def delete_appointment_admin_view(request,pk):
+    appointment=models.Appointment.objects.get(id=pk)
+    appointment.delete()
+    return redirect('admin-view-appointment')
 #---------------------------------------------------------------------------------
 #------------------------ ADMIN RELATED VIEWS END ------------------------------
 #---------------------------------------------------------------------------------
@@ -649,8 +687,19 @@ def doctor_view_patient_view(request):
 def search_view(request):
     doctor=models.Doctor.objects.get(user_id=request.user.id) #for profile picture of doctor in sidebar
     # whatever user write in search box we get in query
-    query = request.GET['query']
-    patients=models.Patient.objects.all().filter(status=True,assignedDoctorId=request.user.id).filter(Q(symptoms__icontains=query)|Q(user__first_name__icontains=query))
+    query = request.GET.get('query', '')
+    if query:
+        patients=models.Patient.objects.all().filter(
+            status=True,
+            assignedDoctorId=request.user.id
+        ).filter(
+            Q(user__first_name__icontains=query) | 
+            Q(user__last_name__icontains=query) |
+            Q(mobile__icontains=query)
+        )
+    else:
+        # If no query, show all assigned patients
+        patients=models.Patient.objects.all().filter(status=True,assignedDoctorId=request.user.id)
     return render(request,'hospital/doctor_view_patient.html',{'patients':patients,'doctor':doctor})
 
 
@@ -909,6 +958,65 @@ def contactus_view(request):
 #------------------------ ADMIN RELATED VIEWS END ------------------------------
 #---------------------------------------------------------------------------------
 
+
+
+
+
+def password_reset_request(request):
+    if request.method == "POST":
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            data = password_reset_form.cleaned_data['email']
+            associated_users = User.objects.filter(email=data)
+            if associated_users.exists():
+                for user in associated_users:
+                    subject = "Password Reset Requested"
+                    email_template_name = "hospital/password_reset_email.html"
+                    c = {
+                        "email": user.email,
+                        'domain': get_current_site(request).domain,
+                        'site_name': 'Hospital Management System',
+                        "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                        "user": user,
+                        'token': default_token_generator.make_token(user),
+                        'protocol': 'https' if request.is_secure() else 'http',
+                    }
+                    email = render_to_string(email_template_name, c)
+                    try:
+                        send_mail(subject, email, 'noreply@hospital.com', [user.email], fail_silently=False)
+                        messages.success(request, 'Password reset email has been sent to your email address.')
+                    except Exception as e:
+                        messages.error(request, 'Error sending email. Please try again.')
+                return redirect("doctorlogin")
+            else:
+                messages.error(request, 'No user found with this email address.')
+    password_reset_form = PasswordResetForm()
+    return render(request, "hospital/password_reset.html", context={"password_reset_form": password_reset_form})
+
+def password_reset_confirm(request, uidb64, token):
+    from django.contrib.auth.forms import SetPasswordForm
+    from django.utils.http import urlsafe_base64_decode
+    from django.contrib.auth.models import User
+    
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = User.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    
+    if user is not None and default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = SetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your password has been reset successfully.')
+                return redirect('doctorlogin')
+        else:
+            form = SetPasswordForm(user)
+        return render(request, 'hospital/password_reset_confirm.html', {'form': form})
+    else:
+        messages.error(request, 'The reset link is invalid or has expired.')
+        return redirect('doctorlogin')
 
 
 

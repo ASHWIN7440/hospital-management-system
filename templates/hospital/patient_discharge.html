@@ -120,7 +120,7 @@
       text-decoration: none;
     }
     .not-discharged {
-      text-align: center;
+        text-align: center;
       margin: 4rem 0 6rem 0;
       color: #FF6584;
     }
@@ -133,7 +133,7 @@
       font-size: 1.1rem;
       color: #636e72;
       margin-top: 0.5rem;
-    }
+      }
     @media (max-width: 768px) {
       .discharge-panel {
         padding: 1.2rem 0.5rem 1rem 0.5rem;
@@ -146,14 +146,14 @@
       .summary-section {
         flex-direction: column;
         gap: 1rem;
-      }
+    }
       .summary-block {
         padding: 0.8rem 0.7rem;
-      }
+    }
       .invoice-table th, .invoice-table td {
         padding: 0.7rem 0.5rem;
         font-size: 0.95rem;
-      }
+    }
       .download-btn {
         padding: 0.7rem 1.2rem;
         font-size: 1rem;
@@ -188,38 +188,40 @@
         <tr>
           <th>Item</th>
           <th>Amount</th>
-        </tr>
+          </tr>
       </thead>
       <tbody>
         <tr>
           <td>Disease &amp; Symptoms</td>
           <td>{{symptoms}}</td>
-        </tr>
-        <tr>
+    </tr>
+          <tr>
           <td>Room Charge ({{daySpent}} Days)</td>
           <td>{{roomCharge}}</td>
-        </tr>
+          </tr>
         <tr>
           <td>Doctor Fee</td>
           <td>{{doctorFee}}</td>
-        </tr>
+    </tr>
         <tr>
           <td>Medicine Cost</td>
           <td>{{medicineCost}}</td>
-        </tr>
+    </tr>
         <tr>
           <td>Other Charge</td>
           <td>{{OtherCharge}}</td>
-        </tr>
+    </tr>
         <tr class="total-row">
           <td>Total Rupees</td>
           <td>{{total}}</td>
-        </tr>
+    </tr>
       </tbody>
-    </table>
-    <div style="text-align:center;">
-      <a class="download-btn" href="{% url 'download-pdf' patientId %}"><i class="fas fa-download"></i>Download Invoice (PDF)</a>
-    </div>
+  </table>
+  <div style="text-align:center;">
+    <a class="download-btn" href="{% url 'download-pdf' patientId %}">
+      <i class="fas fa-download"></i>Download Invoice (PDF)
+    </a>
+  </div>
   </div>
 {% else %}
   <div class="discharge-panel not-discharged">
@@ -227,7 +229,7 @@
     <h5>You Are Not Discharged By Hospital!</h5>
     <h5>Your Treatment Is Going On!</h5>
     <h6>When you are discharged, you can download your invoice here.</h6>
-  </div>
+</div>
 {% endif %}
 </div>
 <br><br><br>

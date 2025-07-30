@@ -63,6 +63,9 @@ urlpatterns = [
     path('admin-approve-appointment', views.admin_approve_appointment_view,name='admin-approve-appointment'),
     path('approve-appointment/<int:pk>', views.approve_appointment_view,name='approve-appointment'),
     path('reject-appointment/<int:pk>', views.reject_appointment_view,name='reject-appointment'),
+    path('view-appointment/<int:pk>', views.view_appointment_view,name='view-appointment'),
+    path('edit-appointment/<int:pk>', views.edit_appointment_view,name='edit-appointment'),
+    path('delete-appointment-admin/<int:pk>', views.delete_appointment_admin_view,name='delete-appointment-admin'),
 ]
 
 
@@ -94,6 +97,9 @@ urlpatterns +=[
     path('patient-view-doctor', views.patient_view_doctor_view,name='patient-view-doctor'),
     path('searchdoctor', views.search_doctor_view,name='searchdoctor'),
     path('patient-discharge', views.patient_discharge_view,name='patient-discharge'),
+    path('download-pdf/<int:patient_id>', views.download_pdf_view,name='download-pdf'),
+    path('password-reset/', views.password_reset_request, name='password_reset'),
+    path('password-reset-confirm/<uidb64>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
 
 ]
 

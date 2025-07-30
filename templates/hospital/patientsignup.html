@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-
 {% load widget_tweaks %}
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>LazyCoder || sumit</title>
+  <title>LazyCoder || Patient Registration</title>
+
   <style type="text/css">
     body {
       color: #aa082e;
@@ -19,51 +19,91 @@
     }
 
     .note {
-      text-align: center;
-      height: 80px;
-      background: -webkit-linear-gradient(left, #0072ff, #8811c5);
-      color: #fff;
-      font-weight: bold;
-      line-height: 80px;
-    }
+  text-align: center;
+  height: 80px;
+  background: linear-gradient(45deg, #3498db, #2ecc71); /* Same as button */
+  color: #fff;
+  font-weight: bold;
+  line-height: 80px;
+  font-size: 22px;
+  border-radius: 10px 10px 0 0;
+}
+
 
     .form-content {
       padding: 5%;
       border: 1px solid #ced4da;
-      margin-bottom: 2%;
+      background-color: #fff;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
 
     .form-control {
       border-radius: 1.5rem;
+      padding: 10px 15px;
+      font-size: 15px;
     }
 
-    .btnSubmit {
+    .gradient-button {
       border: none;
-      border-radius: 1.5rem;
-      padding: 1%;
-      width: 20%;
+      border-radius: 8px;
+      padding: 12px 30px;
+      width: auto;
       cursor: pointer;
-      background: #0062cc;
+      background: linear-gradient(45deg, #3498db, #2ecc71);
       color: #fff;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .gradient-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .text-center {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
     }
   </style>
-
 </head>
 
-
 <body>
+
   {% include "hospital/navbar.html" %}
-  <br>
-  <br>
-  <br>
-  <br>
+  <br><br><br><br>
 
-
-
-
-  <!--- signup page for patient by admin(sumit)  ---------->
+  <!-- Signup page for patient -->
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    {% if userForm.errors or patientForm.errors %}
+      <div class="alert alert-danger" role="alert">
+        {% for field in userForm %}
+          {% for error in field.errors %}
+            <div>{{ error }}</div>
+          {% endfor %}
+        {% endfor %}
+        {% for error in userForm.non_field_errors %}
+          <div>{{ error }}</div>
+        {% endfor %}
+        {% for field in patientForm %}
+          {% for error in field.errors %}
+            <div>{{ error }}</div>
+          {% endfor %}
+        {% endfor %}
+        {% for error in patientForm.non_field_errors %}
+          <div>{{ error }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     <div class="container register-form">
       <div class="form">
         <div class="note">
@@ -86,9 +126,10 @@
                 {% render_field patientForm.symptoms class="form-control" placeholder="Symptoms" %}
               </div>
               <div class="form-group">
-                {% render_field patientForm.profile_pic required="required" class="form-control" placeholder="Profile Picture" %}
+                {% render_field patientForm.profile_pic required="required" class="form-control" %}
               </div>
             </div>
+
             <div class="col-md-6">
               <div class="form-group">
                 {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
@@ -102,15 +143,15 @@
               <div class="form-group">
                 {% render_field patientForm.assignedDoctorId class="form-control" placeholder="Doctor" %}
               </div>
-
             </div>
           </div>
-          <button type="submit" class="btnSubmit">Register</button>
+          <div style="text-align: center;">
+          <button type="submit" class="gradient-button">Register</button>
+        </div>
           <div class="text-center">Already have an account? <a href="patientlogin">Login here</a></div>
         </div>
       </div>
     </div>
-
   </form>
 
   {% include "hospital/footer.html" %}

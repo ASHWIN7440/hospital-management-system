@@ -198,28 +198,28 @@
       <h6 class="panel-title">Recent Patients</h6>
     </div>
     <div style="overflow-x:auto;">
-    <table class="table table-hover" id="dev-table">
-      <thead>
+      <table class="table table-hover" id="dev-table">
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Picture</th>
+            <th>Symptoms</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Admit Date</th>
+          </tr>
+        </thead>
+        {% for p in patients %}
         <tr>
-          <th>Patient Name</th>
-          <th>Picture</th>
-          <th>Symptoms</th>
-          <th>Mobile</th>
-          <th>Address</th>
-          <th>Admit Date</th>
+          <td>{{p.get_name}}</td>
+          <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+          <td>{{p.symptoms}}</td>
+          <td>{{p.mobile}}</td>
+          <td>{{p.address}}</td>
+          <td>{{p.admitDate}}</td>
         </tr>
-      </thead>
-      {% for p in patients %}
-      <tr>
-        <td>{{p.get_name}}</td>
-        <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
-        <td>{{p.symptoms}}</td>
-        <td>{{p.mobile}}</td>
-        <td>{{p.address}}</td>
-        <td>{{p.admitDate}}</td>
-      </tr>
-      {% endfor %}
-    </table>
+        {% endfor %}
+      </table>
     </div>
   </div>
 </div>

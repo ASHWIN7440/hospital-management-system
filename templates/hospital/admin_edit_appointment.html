@@ -1,4 +1,5 @@
 {% extends 'hospital/admin_base.html' %}
+{% load static %}
 {% load widget_tweaks %}
 {% block content %}
 
@@ -13,12 +14,12 @@
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       min-height: 100vh;
       margin: 0;
-      
     }
 
     .container {
       max-width: 800px;
-      margin: 0 auto;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
 
     .page-title {
@@ -33,7 +34,7 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .appointment-form {
+    .form-card {
       background: #ffffff;
       border-radius: 15px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -62,131 +63,141 @@
       margin-bottom: 1.5rem;
     }
 
-    .form-group label {
+    .form-label {
       display: block;
       margin-bottom: 0.5rem;
+      font-weight: 600;
       color: #2d3436;
-      font-weight: 500;
     }
 
     .form-control {
       width: 100%;
-      
+      padding: 0.75rem;
       border: 2px solid #e9ecef;
       border-radius: 8px;
       font-size: 1rem;
       transition: all 0.3s ease;
-      background: #f8f9fa;
+      font-family: 'Poppins', sans-serif;
     }
 
     .form-control:focus {
+      outline: none;
       border-color: #6C63FF;
       box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
-      outline: none;
-    }
-
-    .form-control::placeholder {
-      color: #adb5bd;
     }
 
     .btn-submit {
       background: linear-gradient(45deg, #6C63FF, #4ECDC4);
       color: white;
+      padding: 0.75rem 2rem;
       border: none;
       border-radius: 8px;
-      padding: 1rem 2rem;
       font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      width: 100%;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 0.5rem;
     }
 
     .btn-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(108, 99, 255, 0.2);
+      box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
     }
 
-    .btn-submit i {
-      font-size: 1.2rem;
-    }
-
-    .form-footer {
-      text-align: center;
-      margin-top: 1.5rem;
-      color: #636e72;
-    }
-
-    .form-footer a {
-      color: #6C63FF;
+    .btn-cancel {
+      background: #636e72;
+      color: white;
+      padding: 0.75rem 2rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
       text-decoration: none;
-      font-weight: 500;
+      margin-left: 1rem;
     }
 
-    .form-footer a:hover {
-      text-decoration: underline;
+    .btn-cancel:hover {
+      background: #4a4a4a;
+      transform: translateY(-2px);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
     }
 
     @media (max-width: 768px) {
-      
-
-      .form-content {
-        padding: 1.5rem;
+      .container {
+        margin: 1rem auto;
+        padding: 0 0.5rem;
       }
 
-      .btn-submit {
-        padding: 0.75rem 1.5rem;
+      .form-content {
+        padding: 1rem;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .btn-cancel {
+        margin-left: 0;
+        margin-top: 1rem;
       }
     }
   </style>
 </head>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-
 
 <div class="container">
-  <h1 class="page-title">Book New Appointment</h1>
+  <h1 class="page-title">Edit Appointment</h1>
 
-  <form method="post" class="appointment-form">
-    {% csrf_token %}
+  <div class="form-card">
     <div class="form-header">
-      <h2><i class="fas fa-calendar-plus"></i> Appointment Details</h2>
+      <h2><i class="fas fa-edit"></i> Update Appointment Details</h2>
     </div>
 
-    <div class="form-content">
+    <form method="post" class="form-content">
+      {% csrf_token %}
+      
       <div class="form-group">
-        <label for="description">
-          <i class="fas fa-clipboard-list"></i> Description
-        </label>
+        <label class="form-label">Doctor</label>
+        {% render_field appointmentForm.doctorId class="form-control" %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Patient</label>
+        {% render_field appointmentForm.patientId class="form-control" %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Description</label>
         {% render_field appointmentForm.description class="form-control" placeholder="Enter appointment description" %}
       </div>
 
       <div class="form-group">
-        <label for="doctor">
-          <i class="fas fa-user-md"></i> Select Doctor
-        </label>
-        {% render_field appointmentForm.doctorId class="form-control" placeholder="Choose a doctor" %}
+        <label class="form-label">Appointment Date</label>
+        {% render_field appointmentForm.appointmentDate class="form-control" type="date" %}
       </div>
 
-      <div class="form-group">
-        <label for="patient">
-          <i class="fas fa-user"></i> Select Patient
-        </label>
-        {% render_field appointmentForm.patientId class="form-control" placeholder="Choose a patient" %}
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-save"></i> Update Appointment
+        </button>
+        <a href="{% url 'admin-view-appointment' %}" class="btn-cancel">
+          <i class="fas fa-times"></i> Cancel
+        </a>
       </div>
-
-      <button type="submit" class="btn-submit">
-        <i class="fas fa-calendar-check"></i> Book Appointment
-      </button>
-
-      <div class="form-footer">
-        <p>Need to manage appointments? <a href="/admin-view-appointment">View all appointments</a></p>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 
-{% endblock content %}
+{% endblock content %} 
