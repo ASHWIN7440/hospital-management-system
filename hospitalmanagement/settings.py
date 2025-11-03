@@ -32,7 +32,7 @@ if not SECRET_KEY:
 # Set DEBUG via environment ("True"/"False"), default False
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-_allowed_hosts_env = os.environ.get('ALLOWED_HOSTS', 'your-app-name.onrender.com,localhost,127.0.0.1')
+_allowed_hosts_env = os.environ.get('ALLOWED_HOSTS', 'hospital-management-system-1-msy7.onrender.com,localhost,127.0.0.1')
 ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts_env.split(',') if h.strip()]
 
 
